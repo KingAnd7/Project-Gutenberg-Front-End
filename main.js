@@ -8,10 +8,12 @@ const rl = readline.createInterface({
 });
 
 async function menuOptions(params) {
-    console.log("1. Search for book")
+    console.log("Main Menu")
+    console.log("Please select an option:")
+    console.log("1. Search for a book")
     console.log("2. Use id to find book (use this only if you already know the book id")
     console.log("3. look at last 10 books")
-    return rl.question("select the number that you would like to do? ", 
+    return rl.question("select the number that you would like to do: ", 
         (answer) =>{
             if (answer == 1){
                 askQuestion()
@@ -23,7 +25,7 @@ async function menuOptions(params) {
                 tenLastBooks()
             }
             else{
-                console.log("Please input the number you would like to select")
+                console.log("Please input the number you would like to select \n")
                 menuOptions()
             }
 
@@ -38,7 +40,6 @@ async function askQuestion(query){
         answer => {
         console.log(`You searched for: ${answer} \n`);
         getData(answer);
-        rl.close
     });
 };
 
@@ -58,9 +59,9 @@ async function askForId(){
     return rl.question("What is the ID of the book you want to read? ", answer => {
         console.log(`You selected book ID: ${answer} \n`);
         getBook(answer);
-        rl.close
+        rl.close();
     });
-}
+};
 
 async function getBook(id){
 // example link "https://www.gutenberg.org/ebooks/1661.txt.utf-8"
@@ -68,4 +69,4 @@ async function getBook(id){
     const text = await request.text();
     
     console.log(text);
-} 
+};
