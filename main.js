@@ -6,15 +6,41 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+
+async function menuOptions(params) {
+    console.log("1. Search for book")
+    console.log("2. Use id to find book (use this only if you already know the book id")
+    console.log("3. look at last 10 books")
+    return rl.question("select the number that you would like to do? ", 
+        (answer) =>{
+            if (answer == 1){
+                askQuestion()
+            }
+            else if (answer == 2){
+                askForId()
+            }
+            else if (answer == 3){
+                tenLastBooks()
+            }
+            else{
+                console.log("Please input the number you would like to select")
+                menuOptions()
+            }
+
+        })
+    
+}
+
+menuOptions();
+
 async function askQuestion(query){
-    return rl.question("What would you like to search for? ", answer => {
+    return rl.question("What would you like to search for? ", 
+        answer => {
         console.log(`You searched for: ${answer} \n`);
         getData(answer);
         rl.close
     });
 };
-
-askQuestion();
 
 async function getData(str) {
     const request = await fetch(url + 'str');
@@ -37,8 +63,9 @@ async function askForId(){
 }
 
 async function getBook(id){
-//"https://www.gutenberg.org/ebooks/1661.txt.utf-8"
+// example link "https://www.gutenberg.org/ebooks/1661.txt.utf-8"
     const request = await fetch('https://www.gutenberg.org/ebooks/' + id + '.txt.utf-8');
     const text = await request.text();
+    
     console.log(text);
 } 
