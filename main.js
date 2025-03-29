@@ -44,16 +44,18 @@ async function askQuestion(query){
 };
 
 async function getData(str) {
-    const request = await fetch(url + 'str');
+    const request = await fetch(url + str);
     const json = await request.json();
 //    console.log(json);
-//    console.log(json.count);
+//    console.log(request);
 
-    for (let i = 0; i < 32; ++i) {
-        console.log(json.results[i].id,  ': ',  json.results[i].title, '\n');
+    for (let i = 0; i < json.count && i < 32; ++i) {
+        console.log(json.results[i].id,  ': ',  json.results[i].title,
+             ' By ', json.results[i].authors.map((author) => author.name).join(", "),  '\n');
     }
     askForId();
 };
+
 
 async function askForId(){
     return rl.question("What is the ID of the book you want to read? ", answer => {
@@ -64,9 +66,16 @@ async function askForId(){
 };
 
 async function getBook(id){
-// example link "https://www.gutenberg.org/ebooks/1661.txt.utf-8"
+// example link "https://www.gutenberg.org/ebooks/(id).txt.utf-8"
     const request = await fetch('https://www.gutenberg.org/ebooks/' + id + '.txt.utf-8');
     const text = await request.text();
     
-    console.log(text);
+//    console.log(text);
+//    console.log(text.length)
+    printWords(text);
 };
+async function printWords(text){
+    const textSplit = text.split("/\r?\n/");
+    console.log(textSplit);
+    console.log(textSplit[1]);
+}
