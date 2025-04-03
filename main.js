@@ -74,8 +74,22 @@ async function getBook(id){
 //    console.log(text.length)
     printWords(text);
 };
-async function printWords(text){
-    const textSplit = text.split("/\r?\n/");
-    console.log(textSplit);
+
+async function printWords(text) {
+    // Step 1: Replace tab
+    text = text.replace(/\t+/g, " ");
+    // Step 2: Replace carriage return and line feeds (\r\n) with just newline (\n)
+    text = text.replace(/\r\n/g, "\n"); // Normalize line endings
+    // Step 3: Split text into paragraphs by detecting two or more consecutive newlines
+    const textSplit = text.split(/\n\n+/);
+  
+    // Step 4: Clean up leading and trailing spaces from each paragraph
+    const trimmedText = textSplit.map((paragraph) => paragraph.trim());
+  
+    // Output the cleaned paragraphs
+    trimmedText.forEach((paragraph) => {
+      console.log(paragraph);
+    });
+  
     console.log(textSplit[1]);
-}
+  }
