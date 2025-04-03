@@ -13,7 +13,7 @@ async function menuOptions(params) {
     console.log("1. Search for a book")
     console.log("2. Use id to find book (use this only if you already know the book id)")
     console.log("3. look at last 10 books")
-    return rl.question("select the number that you would like to do: ", 
+    return rl.question("Select the number that you would like to do: ", 
         (answer) =>{
             if (answer == 1){
                 askQuestion()
@@ -82,7 +82,6 @@ async function printWords(text) {
     text = text.replace(/\r\n/g, "\n"); // Normalize line endings
     // Step 3: Split text into paragraphs by detecting two or more consecutive newlines
     const textSplit = text.split(/\n\n+/);
-  
     // Step 4: Clean up leading and trailing spaces from each paragraph
     const trimmedText = textSplit.map((paragraph) => paragraph.trim());
   
@@ -92,27 +91,29 @@ async function printWords(text) {
       console.log(paragraph);
     });
     */        
-    console.log(textSplit[1]);
+    // print first paragragh usually the title of book
+    console.log("\x1b[90m" + textSplit[1] + "\x1b[0m");
     T = true
     x = 2
     // allow user input to read the next parapraph or exit the program
     // still need to finish as of 4/3/25 11:10AM
     while (T == true){
-
-        const answer = await askQuestionwords("type 'exit' to close the program or type next to read the next paragraph: ");
+        const answer = await askQuestionWords("Type 'exit' to close the program or type 'next' to read the next paragraph: ");
         if (answer == "exit") {
-        T = false;
-        menuOptions(); // return to main menu
+            // return to main menu
+            T = false;
+            menuOptions();
         }
         else if (answer == "next") {
-        console.log(textSplit[x] + "\n")
-        x++;
+            // change the color of the books text to grey and print the next paragraph 
+            console.log("\n \x1b[90m" + textSplit[x] + "\x1b[0m" + "\n")
+            x++;
         };
         }
         
   }
 
-function askQuestionwords(query){
+function askQuestionWords(query){
     return new Promise(resolve =>{
       rl.question(query, answer => {
         resolve(answer);
