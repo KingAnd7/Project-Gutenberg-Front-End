@@ -11,7 +11,7 @@ async function menuOptions(params) {
     console.log("Main Menu")
     console.log("Please select an option:")
     console.log("1. Search for a book")
-    console.log("2. Use id to find book (use this only if you already know the book id")
+    console.log("2. Use id to find book (use this only if you already know the book id)")
     console.log("3. look at last 10 books")
     return rl.question("select the number that you would like to do: ", 
         (answer) =>{
@@ -61,7 +61,7 @@ async function askForId(){
     return rl.question("What is the ID of the book you want to read? ", answer => {
         console.log(`You selected book ID: ${answer} \n`);
         getBook(answer);
-        rl.close();
+        // rl.close();
     });
 };
 
@@ -87,9 +87,35 @@ async function printWords(text) {
     const trimmedText = textSplit.map((paragraph) => paragraph.trim());
   
     // Output the cleaned paragraphs
+    /*
     trimmedText.forEach((paragraph) => {
       console.log(paragraph);
     });
-  
+    */        
     console.log(textSplit[1]);
+    T = true
+    x = 2
+    // allow user input to read the next parapraph or exit the program
+    // still need to finish as of 4/3/25 11:10AM
+    while (T == true){
+
+        const answer = await askQuestionwords("type 'exit' to close the program or type next to read the next paragraph: ");
+        if (answer == "exit") {
+        T = false;
+        menuOptions(); // return to main menu
+        }
+        else if (answer == "next") {
+        console.log(textSplit[x] + "\n")
+        x++;
+        };
+        }
+        
+  }
+
+function askQuestionwords(query){
+    return new Promise(resolve =>{
+      rl.question(query, answer => {
+        resolve(answer);
+      });
+    });
   }
