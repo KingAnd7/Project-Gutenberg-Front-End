@@ -12,7 +12,8 @@ async function menuOptions(params) {
     console.log("Please select an option:")
     console.log("1. Search for a book")
     console.log("2. Use id to find book (use this only if you already know the book id)")
-    console.log("3. look at last 10 books")
+    console.log("3. Look at last 10 books")
+    console.log("4. Exit")
     return rl.question("Select the number that you would like to do: ", 
         (answer) =>{
             if (answer == 1){
@@ -23,6 +24,10 @@ async function menuOptions(params) {
             }
             else if (answer == 3){
                 tenLastBooks()
+            }
+            else if (answer == 4){
+                console.log("Exiting")
+                rl.close();
             }
             else{
                 console.log("Please input the number you would like to select \n")
